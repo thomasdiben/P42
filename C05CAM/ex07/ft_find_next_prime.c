@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_is_prime.c                                      :+:      :+:    :+:   */
+/*   ft_find_next_prime.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbouvet <cbouvet@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 14:36:02 by cbouvet           #+#    #+#             */
-/*   Updated: 2023/03/14 16:34:59 by cbouvet          ###   ########.fr       */
+/*   Created: 2023/03/14 16:05:34 by cbouvet           #+#    #+#             */
+/*   Updated: 2023/03/14 16:32:30 by cbouvet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-int	ft_decrease(int nb, int d)
+int	ft_recurse(int nb, int i)
 {
-	if (d == 1)
+	if (i < 2)
 		return (1);
-	else if (nb % d > 0)
-		return (ft_decrease(nb, d -1));
+	else if (nb % i != 0)
+		return (ft_recurse(nb, i - 1));
 	return (0);
 }
 
-int	ft_is_prime(int nb)
+int	ft_find_next_prime(int nb)
 {
-	if ((nb < 1) || (nb > 2147483647) || (nb == 1))
+	if ((nb < 0) || (nb > 2147483647))
 		return (0);
-	else
-		return (ft_decrease(nb, nb -1));
+	else if (nb == 1)
+		return (2);
+	else if (ft_recurse(nb, nb -1))
+		return (nb);
+	else if (!ft_recurse(nb, nb -1))
+		return (ft_find_next_prime(nb +1));
+	return (0);
 }
-
+/*
 #include <stdio.h>
 int	main(void)
 {
-	printf("%i\n", ft_is_prime(2));
-}
+	printf("%i\n", ft_find_next_prime(2));
+}*/
